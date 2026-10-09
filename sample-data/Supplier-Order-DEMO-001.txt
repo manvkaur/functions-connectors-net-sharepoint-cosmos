@@ -1,0 +1,11 @@
+SYNTHETIC DEMO PURCHASE ORDER
+
+Order reference: DEMO-001
+Supplier: Example Demo Supplier
+Product code: DEMO-PRODUCT-100
+Quantity: 5
+Requested action: Register this document for procurement review.
+
+This file contains fictional demo data only.
+The sample Function processes SharePoint file metadata, not this file's contents.
+Expected Cosmos record status: Received

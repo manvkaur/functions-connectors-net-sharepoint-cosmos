@@ -1,0 +1,8 @@
+bin/
+obj/
+out/
+.azure/
+.vs/
+*.user
+local.settings.json
+deploy.zip

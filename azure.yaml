@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: functions-connectors-net-sharepoint-cosmos
+services:
+  function-app:
+    host: function
+    project: .
+    language: csharp
+infra:
+  provider: bicep
+workflows:
+  up:
+    steps:
+      - azd: provision
+      - azd: hooks run postpublish
+      - azd: hooks run postdeploy
+hooks:
+  preprovision:
+    shell: pwsh
+    run: |
+      dotnet publish .\SharePointCosmos.csproj -c Release -o .\out\publish --nologo --verbosity quiet
+      if ($LASTEXITCODE -ne 0) { throw 'Function publication build failed.' }
+  postpublish:
+    shell: pwsh
+    run: .\infra\scripts\publish.ps1
+    interactive: true
+  postdeploy:
+    shell: pwsh
+    run: .\infra\scripts\postdeploy.ps1
+    interactive: true
