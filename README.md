@@ -75,11 +75,13 @@ Managed identity authorizes connector, storage, and Cosmos access; the SharePoin
 
 ## Deployment scripts
 
-`azure.yaml` orchestrates Bicep and the helpers in `infra\scripts`: failure-safe private publication, local-settings generation, and final SharePoint consent. Poll registration and cloud settings remain in Bicep.
+`azure.yaml` orchestrates Bicep and the helpers in `infra\scripts`: failure-safe private publication using the Flex publish API, local-settings generation, and final SharePoint consent. Publication uses your Azure CLI identity and verifies the returned deployment ID without probing the private Function's public host endpoint. Poll registration and cloud settings remain in Bicep.
 
 ## Troubleshooting
 
 Check connection consent, access policies, trigger state, and Application Insights exceptions. For Cosmos errors, check private DNS/connectivity and native data roles. A "Prepared" log alone does not prove the write completed.
+
+On networks with destination-specific outbound proxies, a public IP lookup can differ from the address SCM sees. Use the `x-ms-forbidden-ip` response header from the Function's SCM endpoint as the publishing IPv4; do not broaden the temporary `/32` rule.
 
 ## Resources
 
